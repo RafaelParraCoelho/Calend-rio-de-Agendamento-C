@@ -144,13 +144,16 @@ int main() {
   int startingDay;
   int isLeap;
   //Solicita ao usuário o dia da semana do 1º de janeiro
+  do{
   printf("Digite o dia da semana em que o 1º de janeiro cai (0 = Domingo, 1 = "
          "Segunda, ..., 6 = Sábado): ");
   scanf("%d", &startingDay);
-
+  }while(startingDay != 0 && startingDay != 1 && startingDay != 2 && startingDay != 3 && startingDay != 4 && startingDay != 5 && startingDay != 6);
   //Verifica se o ano é bissexto
+  do{
   printf("O ano é bissexto? (1 para sim, 0 para não): ");
   scanf("%d", &isLeap);
+  }while(isLeap != 1 && isLeap != 0);
   int opcao;
 
   int agendamento[366] = {0};
