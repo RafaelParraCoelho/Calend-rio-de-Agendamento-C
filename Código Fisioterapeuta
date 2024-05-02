@@ -110,3 +110,82 @@ void printMonth(int firstDay, int daysInMonth, int agendamento[],
       printf("\n");
   }
 }
+
+//Ela mostra o calandairo para o usuario
+void printCalendar(int startingDay, int isLeap, int agendamento[],
+                   int showSchedule) {
+  char formattedMonths[MAX_MONTHS][10] = {
+      "Janeiro", "Fevereiro", "Março",    "Abril",   "Maio",     "Junho",
+      "Julho",   "Agosto",    "Setembro", "Outubro", "Novembro", "Dezembro"};
+
+  //Imprime o calendário de cada mês
+  for (int month = 0; month < MAX_MONTHS; month++) {
+    //Pula linhas para facilitar leitura
+    printf("\n\n");
+
+    //imprime nome do mês atual que está sendo exibido
+    printf("%s\n", formattedMonths[month]);
+
+    //busca quantos dias este mês tem
+    int daysInMonth = getDaysInMonth(month, isLeap);
+
+    //Imprime o mês que está gostariamos de exibir
+    printMonth(startingDay, daysInMonth, agendamento, showSchedule, month,
+               isLeap);
+
+    //Atualiza o dia da semana para o próximo mês
+    startingDay = (startingDay + daysInMonth) % 7;
+  }
+}
+
+//Main recebe input para saber se é bissexto ou não e em qual dia da semana começa o 1º de janeiro cai.
+//
+int main() {
+  int startingDay;
+  int isLeap;
+  //Solicita ao usuário o dia da semana do 1º de janeiro
+  printf("Digite o dia da semana em que o 1º de janeiro cai (0 = Domingo, 1 = "
+         "Segunda, ..., 6 = Sábado): ");
+  scanf("%d", &startingDay);
+
+  //Verifica se o ano é bissexto
+  printf("O ano é bissexto? (1 para sim, 0 para não): ");
+  scanf("%d", &isLeap);
+  int opcao;
+
+  int agendamento[366] = {0};
+  
+  //Menu
+  do {
+    printf("\nMENU:\n");
+    printf("1. Mostrar calendário\n");
+    printf("2. Inserir agendamento\n");
+    printf("3. Mostrar calendário com agendamentos\n");
+    printf("0. Sair\n");
+    printf("Escolha uma opção: ");
+    scanf("%d", &opcao);
+
+    switch (opcao) {
+    case 1:
+      printCalendar(startingDay, isLeap, agendamento, 0);
+      break;
+    case 2:
+      adicionarAgendamento(agendamento, isLeap);
+
+      // inserir Agendamentos
+      break;
+    case 3:
+      // mostrarCalendarioComAgendamentos
+      showSchedueling(startingDay, isLeap, agendamento);
+
+      break;
+    case 0:
+      printf("Saindo do programa...\n");
+      break;
+    default:
+      printf("Opção inválida. Por favor, escolha novamente.\n");
+    }
+  } while (opcao != 0);
+
+  return 0;
+}
