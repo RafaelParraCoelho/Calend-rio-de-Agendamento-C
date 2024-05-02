@@ -1,1 +1,48 @@
+#include <stdio.h>
 
+#define MAX_MONTHS 12
+
+// declaraçoes de funçoes
+int getDaysInMonth(int month, int isLeapYear);
+void printCalendar(int startingDay, int isLeap, int agendamento[],
+                   int showSchedule);
+void adicionarAgendamento(int agendamento[], int isLeapYear);
+int dateToDaynumber(int day, int month, int isLeapYear);
+
+// funções
+
+//Essa função recebe o primeiro dia, se é bissexto e o vetor de agendamento.
+//Ele utiliza a função de calendário para imprimir o calendário de agendamento.
+void showSchedueling(int startingDay, int isLeap, int agendamento[]) {
+  printCalendar(startingDay, isLeap, agendamento, 1);
+}
+//Input de agentamento.
+//Ela recebe uma array de agendamento.
+//Ela recebe se o ano é bissexto.
+//Ela retorna ao usuario se conseguiu ou não fazer o agendamento com um printf.
+void adicionarAgendamento(int agendamento[], int isLeapYear) {
+  int duracao, diaInicio, mesInicio;
+
+  printf("qual dia deseja começar o tratamento?");
+  scanf("%d", &diaInicio);
+
+  printf("qual mes deseja começar o tratamento?");
+  scanf("%d", &mesInicio);
+
+  printf("digite a duracao do tratamento: ");
+  scanf("%d", &duracao);
+
+  int diaDoAnoInicio = dateToDaynumber(diaInicio, mesInicio, isLeapYear);
+  for (int i = diaDoAnoInicio; i < diaDoAnoInicio + duracao; i++) {
+
+    if (agendamento[i - 1] >= 5) {
+      printf("Não e possivel agendar esse tratamento");
+      return;
+    }
+  }
+  for (int i = diaDoAnoInicio; i < diaDoAnoInicio + duracao; i++) {
+    agendamento[i - 1] += 1;
+  }
+  printf("Seu agendamento foi realizado com sucesso");
+  return;
+}
